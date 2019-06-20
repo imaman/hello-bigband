@@ -22,21 +22,22 @@ Bigband uses AWS' S3 for pushing data/code into the AWS cloud. You can either:
 
 If you choose the latter use the following command:
 ```bash
-aws s3 mb s3://<name-of-your-bucket>
+aws s3 mb s3://<YOUR-S3-BUCKET-NAME>
 ```
 
 ## Define your bigband
-Add a `bigband.config.ts` file, as shown below. Don't forget to adjust the values of `AWS_ACCOUNT`, `S3_BUCKET`, and `PROFILE_NAME` variables.
+Add a `bigband.config.ts` file, as shown below. Don't forget to adjust the placeholder values (`<YOUR-AWS-ACCOUNT-ID>`, `<YOUR-AWS-PROFILE-NAME>`, and `<YOUR-S3-BUCKET-NAME>`) with your own values.
 
 ```typescript
 import { LambdaInstrument, IsolationScope, Section } from 'bigband-core/lib/index';
 
+const namespace = IsolationScope.create({
+    awsAccount: '<YOUR-AWS-ACCOUNT-ID>',
+    profileName: '<YOUR-AWS-PROFILE-NAME>',
+    s3Bucket: '<YOUR-S3-BUCKET-NAME>',
+    s3Prefix: 'hello-bigband-root',
+    scopeName: 'hello-bigband'});
 
-const AWS_ACCOUNT = '<YOUR-AWS-ACCOUNT-ID>';
-const S3_BUCKET = '<NAME-OF-YOUR-BUCKET>';
-const PROFILE_NAME = '<NAME-OF-AN-AWS-PROFILE-DEFINED-ON-YOUR-MACHINE>';
-
-const namespace = new IsolationScope(AWS_ACCOUNT, 'hello-bigband', S3_BUCKET, 'hello-bigband-root', PROFILE_NAME);
 const prod = new Section(namespace, 'eu-west-2', 'prod');
 
 const greeter = new LambdaInstrument('misc', 'greeter', 'src/greeter', {
