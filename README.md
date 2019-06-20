@@ -4,8 +4,8 @@
 
 ## Prerequisites
 
-- setup an AWS profile on your local machine ([instructions](https://docs.aws.amazon.com/cli/latestn/userguide/cli-configure-profiles.html))
-- npx (optional: if you don't want to use `npx` you can run `bigband` directly via `node_modules/.bin/bigband`)
+- Have an AWS profile setup on your local machine ([instructions](https://docs.aws.amazon.com/cli/latestn/userguide/cli-configure-profiles.html))
+- Optional: have [npx](https://www.npmjs.com/package/npx) installed (if you do not want to use `npx` you can run `bigband` directly via `node_modules/.bin/bigband`)
 
 
 ## Install
@@ -14,26 +14,30 @@
 npm install --save-dev bigband
 ```
 
-## Prepare an s3 bucket
-Bigband uses an s3 for pushing data/code into the AWS cloud. You can either use a pre-existing s3 bucket (all Bigband writes take place under a key-prefix which you control) or you can create a new bucket.
+## Prepare an S3 bucket
+Bigband uses AWS' S3 for pushing data/code into the AWS cloud. You can either:
+
+- use a pre-existing S3 bucket (all Bigband writes take place under a key-prefix which you control) 
+- or, you can create a new bucket.
 
 If you choose the latter use the following command:
 ```bash
-aws s3 mb <name-of-your-bucket>
+aws s3 mb s3://<name-of-your-bucket>
 ```
 
 ## Define your bigband
-Add a `bigband.config.ts` file, as shown below. Don't forget to adjust the values of `AWS_ACCOUNT`, `S3_PREFIX`, and `PROFILE_NAME` variables.
+Add a `bigband.config.ts` file, as shown below. Don't forget to adjust the values of `AWS_ACCOUNT`, `S3_BUCKET`, `S3_PREFIX`, and `PROFILE_NAME` variables.
 
 ```typescript
 import { LambdaInstrument, IsolationScope, Section } from 'bigband-core/lib/index';
 
 
 const AWS_ACCOUNT = '<YOUR-AWS-ACCOUNT-ID>';
+const S3_BUCKET = '<NAME-OF-YOUR-BUCKET>';
 const S3_PREFIX = '<A-STRING-OF-YOUR-CHOICE>';
 const PROFILE_NAME = '<NAME-OF-AN-AWS-PROFILE-DEFINED-ON-YOUR-MACHINE>';
 
-const namespace = new IsolationScope(AWS_ACCOUNT, 'hello-bigband', S3_PREFIX, 'hello-bigband-root', PROFILE_NAME);
+const namespace = new IsolationScope(AWS_ACCOUNT, NAME-OF-YOUR-BUCKET, S3_PREFIX, 'hello-bigband-root', PROFILE_NAME);
 const prod = new Section(namespace, 'eu-west-2', 'prod');
 
 const greeter = new LambdaInstrument('misc', 'greeter', 'src/greeter', {
