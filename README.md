@@ -26,7 +26,7 @@ aws s3 mb s3://<name-of-your-bucket>
 ```
 
 ## Define your bigband
-Add a `bigband.config.ts` file, as shown below. Don't forget to adjust the values of `AWS_ACCOUNT`, `S3_BUCKET`, `S3_PREFIX`, and `PROFILE_NAME` variables.
+Add a `bigband.config.ts` file, as shown below. Don't forget to adjust the values of `AWS_ACCOUNT`, `S3_BUCKET`, and `PROFILE_NAME` variables.
 
 ```typescript
 import { LambdaInstrument, IsolationScope, Section } from 'bigband-core/lib/index';
@@ -34,10 +34,9 @@ import { LambdaInstrument, IsolationScope, Section } from 'bigband-core/lib/inde
 
 const AWS_ACCOUNT = '<YOUR-AWS-ACCOUNT-ID>';
 const S3_BUCKET = '<NAME-OF-YOUR-BUCKET>';
-const S3_PREFIX = '<A-STRING-OF-YOUR-CHOICE>';
 const PROFILE_NAME = '<NAME-OF-AN-AWS-PROFILE-DEFINED-ON-YOUR-MACHINE>';
 
-const namespace = new IsolationScope(AWS_ACCOUNT, S3_BUCKET, S3_PREFIX, 'hello-bigband-root', PROFILE_NAME);
+const namespace = new IsolationScope(AWS_ACCOUNT, 'hello-bigband', S3_BUCKET, 'hello-bigband-root', PROFILE_NAME);
 const prod = new Section(namespace, 'eu-west-2', 'prod');
 
 const greeter = new LambdaInstrument('misc', 'greeter', 'src/greeter', {
