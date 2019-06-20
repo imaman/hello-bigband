@@ -37,7 +37,7 @@ const S3_BUCKET = '<NAME-OF-YOUR-BUCKET>';
 const S3_PREFIX = '<A-STRING-OF-YOUR-CHOICE>';
 const PROFILE_NAME = '<NAME-OF-AN-AWS-PROFILE-DEFINED-ON-YOUR-MACHINE>';
 
-const namespace = new IsolationScope(AWS_ACCOUNT, NAME-OF-YOUR-BUCKET, S3_PREFIX, 'hello-bigband-root', PROFILE_NAME);
+const namespace = new IsolationScope(AWS_ACCOUNT, S3_BUCKET, S3_PREFIX, 'hello-bigband-root', PROFILE_NAME);
 const prod = new Section(namespace, 'eu-west-2', 'prod');
 
 const greeter = new LambdaInstrument('misc', 'greeter', 'src/greeter', {
@@ -71,13 +71,13 @@ This function expects to receive an input with two string fields `lastName`, `fi
 
 
 ## Time to ship
-We deploy by using Bigband's `ship` command. This will setup everything in the AWS cloud as needed. It takes no arguments so your command should look as follows:
+We deploy via Bigband's `ship` command. This will setup everything in the AWS cloud as needed.
 
 ```bash
 npx bigband ship
 ```
 
-Once you run it deployment will begin. First-time deployments usually take on the order of 60-90s to complete (as all necessary AWS resources need to be created, via `cloudformation`). Subsequent deployments should be much faster. Here's a full transcript of the `ship` command:
+Once you run it, deployment will begin. First-time deployments usually take on the order of 60-90s to complete (as all necessary AWS resources need to be created via `cloudformation`). Subsequent deployments should be much faster. Here is a full transcript of the `ship` command:
 
 ```
 $ npx bigband ship
@@ -98,16 +98,16 @@ Section "prod" shipped in 75.5s
 ```
 
 
-Important: `bigband ship` is the one-and-only command used for deplyoing bigbands. You use it for first-time deployments (as you just did) but also for every subsequent update. It ships code changes (e.g., changes to `src/greeter.ts`) as well as architecutral changes (e.g., changes to `bigband.config.ts` file). Behaind the scenes, Bigband makes sure that the deployment is minimal: only things that were actully changed will be redeployed. Specifically, if you have multiple lambda instruments defined in your bigband and you have changed just a few them, then running `bigband ship` will only *update the lambdas that were changed*.
+Important: `bigband ship` is the one-and-only command used for deplyoing bigbands. You use it for first-time deployments (as you just did) as well as for every subsequent update. It ships code changes (e.g., changes to `src/greeter.ts`) as well as architecutral changes (e.g., changes to `bigband.config.ts` file). Behind the scenes, Bigband makes sure that the deployment is minimal: only things that were actully changed will be redeployed. Specifically, if you have multiple lambda instruments defined in your bigband and you have changed just a few them, then running `bigband ship` will only *update the lambdas that were changed*.
 
 Bottom line: freely run `bigband ship` whenever you need to deploy.
 
 
 
 ## Let's greet
-Bigband's `invoke` command send a payload of your choice to a lambda instrument. The general format is as follows:
+Use Bigband's `invoke` command to send a payload of your choice to a lambda instrument. The general format is as follows:
 
-```bash
+```
 npx bigband invoke --function-name <name-of-a-lambda-instrument> --input <JSON>
 ```
 
