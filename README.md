@@ -26,7 +26,7 @@ aws s3 mb s3://<YOUR-S3-BUCKET-NAME>
 ```
 
 ## Define your bigband
-Add a `bigband.config.ts` file, as shown below. Don't forget to adjust the placeholder values (`<YOUR-AWS-ACCOUNT-ID>`, `<YOUR-AWS-PROFILE-NAME>`, and `<YOUR-S3-BUCKET-NAME>`) with your own values.
+Create a `bigband.config.ts` file, as shown below. Place it at the same directory as your `package.json` file. Don't forget to *replace the placeholder values* (`<YOUR-AWS-ACCOUNT-ID>`, `<YOUR-AWS-PROFILE-NAME>`, and `<YOUR-S3-BUCKET-NAME>`) with your own values.
 
 ```typescript
 import { LambdaInstrument, IsolationScope, Section } from 'bigband-core/lib/index';
