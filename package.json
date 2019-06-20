@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "bigband": "^0.1.130"
+    "bigband": ">=0.1.135"
   }
 }
