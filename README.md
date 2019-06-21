@@ -2,20 +2,31 @@
 
 Build production grade serveless systems.
 
-## Why Bigband?
+* [Why Bigband](#why)
+* [What is Bigband](#what)
+* [Three core concepts](#concepts)
+* [Quick Start](#quick-start)
+
+## <a name="why"></a>Why Bigband?
 - Super-fast deployments.
-- Reusability - you don't have to duplicate your configuration just so that you can have a staging environemt.
 - Proven - came out of [testim.io](https://www.testim.io/) where it is used to drive two business-critical large-scale projects.
+- Reusability - say good bye to copy-pasting huge YAML snippets.
 - IAM permissions are automatically managed for you - say goodebye to getting a `___ is not authorized to perform: ___ on resource ___` at runtime.
 - Dependencies are injected into your code wrapped by high-level APIs - say goodebye to getting a runtime error due to mis-constructing an ARN.
-- Built-in protection against infinite cycles (coming soon).
+- Secure - Bigband does its best to protect from potentially costly mistakes. For instance, it will prevent you from creating a cycle of lambda functions.
 
-### Three core-concepts
+## <a name="what"></a>What is Bigband?
+The Bigband system has three main parts:
+- A command line tool
+- A Typescript API for configuring the architecture of your system
+- A Typescript API to be used at runtime by Lambda functions 
+
+## <a name="concepts"></a>Three core concepts
 - *Instrument*: the basic building-block, usually corresponds to an AWS resources such as: a Lambda function, a DynamoDB table, a Kinesis stream, etc.
-- *Section*: A set of instruments. In Bigband, this is the unit of deployment: depending on your exact needs you can define, for instance, a `prod` section and a `staging` section, or you can define a `storage` section and a `business-logic` section.
+- *Section*: A set of instruments. This is the unit of deployment: depending on your exact needs you can define, for instance, a `prod` section and a `staging` section, or you can define a `storage` section and a `business-logic` section.
 - *Bigband*: a set of sections. This is the unit of isolation: instruments within the same bigband can be wired together to create a cohesive application/service-mesh. 
 
-## Quick start
+## <a name="quick-start"></a>Quick start
 
 ### Prerequisites
 
