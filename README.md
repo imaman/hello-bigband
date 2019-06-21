@@ -10,10 +10,10 @@ Build production grade serveless systems.
 ## <a name="why"></a>Why Bigband?
 - Super-fast deployments.
 - Proven - came out of [testim.io](https://www.testim.io/) where it is used to drive two business-critical large-scale projects.
-- Reusability - say good bye to copy-pasting huge YAML snippets.
+- Reusability - say goodbye to copy-pasting huge YAML snippets.
 - IAM permissions are automatically managed for you - say goodebye to getting a `___ is not authorized to perform: ___ on resource ___` at runtime.
-- Dependencies are injected into your code wrapped by high-level APIs - say goodebye to getting a runtime error due to mis-constructing an ARN.
-- Secure - Bigband does its best to protect from potentially costly mistakes. For instance, it will prevent you from creating a cycle of lambda functions.
+- Dependencies are injected into your code wrapped by high-level APIs - say goodebye to getting a runtime errors due to a mis-constructed an ARN.
+- Secure - Bigband does its best to protect you from potentially costly mistakes. For instance, it will guard against cycles of lambda functions.
 
 ## <a name="what"></a>What is Bigband?
 The Bigband system has three main parts:
@@ -55,23 +55,21 @@ aws s3 mb s3://<YOUR-S3-BUCKET-NAME>
 Create a `bigband.config.ts` file, as shown below. Place it at the same directory as your `package.json` file. Don't forget to *replace the placeholder values* (`<YOUR-AWS-ACCOUNT-ID>`, `<YOUR-AWS-PROFILE-NAME>`, and `<YOUR-S3-BUCKET-NAME>`) with your own values.
 
 ```typescript
-import { LambdaInstrument, IsolationScope, Section } from 'bigband-core/lib/index';
+import { Bigband, LambdaInstrument, Section } from 'bigband-core/lib/index';
 
-const namespace = IsolationScope.create({
+const bigband = new Bigband({
+    name: 'hello-bigband',
     awsAccount: '<YOUR-AWS-ACCOUNT-ID>',
     profileName: '<YOUR-AWS-PROFILE-NAME>',
     s3Bucket: '<YOUR-S3-BUCKET-NAME>',
-    s3Prefix: 'hello-bigband-root',
-    scopeName: 'hello-bigband'});
-
-const prod = new Section(namespace, 'eu-west-2', 'prod');
+    s3Prefix: 'hello-bigband-root'});
+const prod = new Section(bigband, 'eu-west-2', 'prod');
 
 const greeter = new LambdaInstrument('misc', 'greeter', 'src/greeter', {
     Description: "plain old greeter",
     MemorySize: 1024,
     Timeout: 15   
 });
-
 
 export function run() {
     return {

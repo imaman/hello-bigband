@@ -1,13 +1,13 @@
-import { LambdaInstrument, IsolationScope, Section } from 'bigband-core/lib/index';
+import { Bigband, LambdaInstrument, Section } from 'bigband-core/lib/index';
 
 
-const namespace = IsolationScope.create({
+const bigband = new Bigband({
+    name: 'hello-bigband',
     awsAccount: '196625562809',
     profileName: 'imaman',
     s3Bucket: 'bigband-example',
-    s3Prefix: 'hello-bigband-root',
-    scopeName: 'hello-bigband'});
-const prod = new Section(namespace, 'eu-west-2', 'prod');
+    s3Prefix: 'hello-bigband-root'});
+const prod = new Section(bigband, 'eu-west-2', 'prod');
 
 const greeter = new LambdaInstrument('misc', 'greeter', 'src/greeter', {
     Description: "plain old greeter",
