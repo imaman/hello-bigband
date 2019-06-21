@@ -2,7 +2,7 @@
 
 Build production grade serveless systems.
 
-## Why Bigbad?
+## Why Bigband?
 - Super-fast deployments
 - Every definition is reusable - you don't have to duplciate configurations just so that you have a staging environemt. 
 - IAM permissions are automatically managed for you
