@@ -1,31 +1,40 @@
-# hello-bigband!
+# Bigband
 
+Build production grade serveless systems.
 
+## Why Bigbad?
+- Super-fast deployments
+- Every definition is reusable - you don't have to duplciate configurations just so that you have a staging environemt. 
+- IAM permissions are automatically managed for you
+- Dependencies are injected into your code
+- Built-in protection against infinite cycles (coming soon)
 
-## Prerequisites
+## Quick start
 
-- Have an AWS profile setup on your local machine ([instructions](https://docs.aws.amazon.com/cli/latestn/userguide/cli-configure-profiles.html))
+### Prerequisites
+
+- Have an AWS profile setup on your local machine ([instructions](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html))
 - Optional: have [npx](https://www.npmjs.com/package/npx) installed (if you do not want to use `npx` you can run `bigband` directly via `node_modules/.bin/bigband`)
 
 
-## Install
+### Install
 
-```bash
+```
 npm install --save-dev bigband
 ```
 
-## Prepare an S3 bucket
+### Prepare an S3 bucket
 Bigband uses AWS' S3 for pushing data/code into the AWS cloud. You can either:
 
 - use a pre-existing S3 bucket (all Bigband writes take place under a key-prefix which you control) 
 - or, you can create a new bucket.
 
-If you choose the latter use the following command:
+If you chose the latter use the following command:
 ```bash
 aws s3 mb s3://<YOUR-S3-BUCKET-NAME>
 ```
 
-## Define your bigband
+### Define your bigband
 Create a `bigband.config.ts` file, as shown below. Place it at the same directory as your `package.json` file. Don't forget to *replace the placeholder values* (`<YOUR-AWS-ACCOUNT-ID>`, `<YOUR-AWS-PROFILE-NAME>`, and `<YOUR-S3-BUCKET-NAME>`) with your own values.
 
 ```typescript
@@ -55,7 +64,7 @@ export function run() {
 }
 ```
 
-## Implement a greeter function
+### Implement a greeter function
 Add an `src/greeter.ts` file, as follows:
 
 ```typescript
@@ -70,7 +79,7 @@ This function expects to receive an input with two string fields `lastName`, `fi
 
 
 
-## Time to ship
+### Time to ship
 We deploy via Bigband's `ship` command. This will setup everything in the AWS cloud as needed.
 
 ```bash
@@ -104,7 +113,7 @@ Bottom line: freely run `bigband ship` whenever you need to deploy.
 
 
 
-## Let's greet
+### Let's greet
 Use Bigband's `invoke` command to send a payload of your choice to a lambda instrument. The general format is as follows:
 
 ```
@@ -131,6 +140,6 @@ $ npx bigband invoke --function-name greeter --input '{"firstName": "James", "la
 ```
 
 
-## Congratulations!
+### Congratulations!
 Your first bigband is up-and-playing.
 
